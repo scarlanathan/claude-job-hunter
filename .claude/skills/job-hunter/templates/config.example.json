@@ -1,0 +1,81 @@
+{
+  "_doc": "Configuration du skill job-hunter. Les secrets (tokens, mots de passe) se mettent dans des variables d'environnement, jamais ici.",
+
+  "search": {
+    "keywords": ["développeur python", "data engineer"],
+    "locations": ["Paris", "Lyon"],
+    "country": "FR",
+    "max_per_source": 50,
+    "posted_within_days": 7,
+    "exclude_keywords": ["stage", "stagiaire", "alternance", "alternant", "senior manager"],
+    "_exclude_keywords_doc": "Mots entiers, sans tenir compte des accents ni de la casse, cherchés dans le titre et l'entreprise.",
+    "exclude_description_keywords": [],
+    "_exclude_description_doc": "Même chose, mais dans la description (ex. 'permis C', 'travail de nuit').",
+    "exclude_companies": [],
+    "distance_km": 10,
+    "_distance_doc": "France Travail : rayon autour d'une ville (le département s'écrit '69', une ville 'Lyon' ou 'Saint-Denis (93)').",
+    "apify_max_charge_usd": 1.0,
+    "_apify_max_charge_doc": "Dépense maximale par run Apify (une source peut avoir son propre max_charge_usd).",
+    "parallel": 4,
+    "sources": ["francetravail", "linkedin", "indeed"]
+  },
+
+  "sources": {
+    "linkedin": {
+      "type": "apify",
+      "actor": "curious_coder/linkedin-jobs-scraper",
+      "input": {
+        "urls": ["{linkedin_search_url}"],
+        "count": "{max}",
+        "scrapeCompany": false
+      }
+    },
+    "indeed": {
+      "type": "apify",
+      "actor": "misceres/indeed-scraper",
+      "input": {
+        "position": "{keywords}",
+        "location": "{location}",
+        "country": "{country}",
+        "maxItems": "{max}",
+        "parseCompanyDetails": false,
+        "saveOnlyUniqueItems": true
+      }
+    },
+    "multi": {
+      "type": "apify",
+      "actor": "iskoren/multi-job-board-scraper",
+      "_doc": "Exemple d'acteur multi-sites. Vérifie le schéma d'entrée sur sa page Apify avant de l'activer.",
+      "input": {
+        "query": "{keywords}",
+        "location": "{location}",
+        "maxItems": "{max}"
+      }
+    },
+    "francetravail": {
+      "type": "francetravail",
+      "_doc": "API officielle et gratuite. Crée une application sur francetravail.io et abonne-la à 'Offres d'emploi v2'."
+    }
+  },
+
+  "apply": {
+    "validation": "each",
+    "_validation_doc": "each = l'utilisateur valide chaque envoi ; batch = valide une liste d'un coup ; auto = envoie seul (respecte quand même daily_cap et min_score_auto)",
+    "daily_cap": 15,
+    "min_score_shortlist": 60,
+    "min_score_auto": 75,
+    "followup_days": 8,
+    "cover_letter": "when_useful",
+    "_cover_letter_doc": "always | when_useful (si demandée ou si candidature par email) | never"
+  },
+
+  "email": {
+    "smtp_host": "smtp.gmail.com",
+    "smtp_port": 465,
+    "smtp_user": "ton.adresse@gmail.com",
+    "from_name": "Prénom Nom",
+    "imap_host": "imap.gmail.com",
+    "imap_port": 993,
+    "_doc": "Mot de passe dans la variable d'environnement JOB_HUNTER_SMTP_PASSWORD (pour Gmail : un mot de passe d'application, pas ton mot de passe normal). imap_host sert à check_replies.py (même mot de passe, ou JOB_HUNTER_IMAP_PASSWORD)."
+  }
+}

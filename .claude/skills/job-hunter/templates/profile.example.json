@@ -1,0 +1,49 @@
+{
+  "identity": {
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "ton.adresse@gmail.com",
+    "phone": "+33 6 00 00 00 00",
+    "city": "Paris",
+    "country": "France",
+    "linkedin": "https://www.linkedin.com/in/ton-profil",
+    "github": "",
+    "website": ""
+  },
+
+  "documents": {
+    "cv_pdf": "C:/Users/<toi>/Documents/CV.pdf",
+    "cover_letter_base": "",
+    "_doc": "cover_letter_base : chemin optionnel vers une lettre type (.md/.txt) qui sert de base de style."
+  },
+
+  "summary": "Résumé en 3-4 phrases de ton profil, rempli automatiquement à partir du CV puis relu.",
+  "skills": ["Python", "SQL"],
+  "experiences": [
+    {"title": "", "company": "", "start": "", "end": "", "highlights": [""]}
+  ],
+  "education": [
+    {"degree": "", "school": "", "year": ""}
+  ],
+  "languages": ["Français (natif)", "Anglais (courant)"],
+
+  "preferences": {
+    "contracts": ["CDI"],
+    "remote": "hybride accepté",
+    "salary_min_eur": 0,
+    "mobility": "Île-de-France",
+    "deal_breakers": []
+  },
+
+  "standard_answers": {
+    "_doc": "Réponses aux questions fréquentes des formulaires. L'IA n'invente jamais une réponse absente d'ici : elle demande.",
+    "work_authorization_eu": "Oui",
+    "needs_sponsorship": "Non",
+    "notice_period": "1 mois",
+    "available_from": "Immédiatement",
+    "salary_expectation": "",
+    "willing_to_relocate": "Non",
+    "driving_licence": "Oui",
+    "how_did_you_hear": "LinkedIn"
+  }
+}
